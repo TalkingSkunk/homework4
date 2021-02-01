@@ -187,7 +187,9 @@
             }
             return myQuestions;
         }
-
+        // shuffling questions
+        let theQuestions = shuffle(myQuestions);
+        console.log('shuffled Questions');
 
 
 
@@ -203,16 +205,14 @@
                     //go to #quizDone
                     endQuiz();
                 }
-                console.log(timeleft);
+                // console.log(timeleft);
             }, 1000);
         }
 
         let i = 0; //counter of questions
         // create function runQuizQuestions()
         function runQuizQuestions() {
-            // shuffling questions
-            let theQuestions = shuffle(myQuestions);
-            console.log('shuffled Questions');
+
             if (i < theQuestions.length) {
                 // fill in the questions HTML
                 document.querySelector('#quizQ').innerText = theQuestions[i].question;
