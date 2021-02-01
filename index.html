@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sam's Code Quiz</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+        integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="startPage" class="container">
+        <h1>
+            Ready to start?
+        </h1>
+        <button id="startButton" onclick="runQuiz()" class="btn btn-dark">Start</button>
+    </div>
+
+    <div id="quiz" class="container d-none">
+        <h1>Sam's Code Quiz (10 Questions)</h1>
+
+        <div class="row">
+            <div class="col-10">
+                <div id="quizQ">
+                    <!-- Questions are added here. -->
+                </div>
+                <!-- answer buttons -->
+                <button id="a1" type="button" class="btn btn-dark"></button>
+                <button id="a2" type="button" class="btn btn-dark"></button>
+                <button id="a3" type="button" class="btn btn-dark"></button>
+                <button id="a4" type="button" class="btn btn-dark"></button>
+                <hr />
+                <div id="result" class="alert alert-success alert-danger d-none"></div>
+
+            </div>
+            <div class="col-2">
+                <div id="time"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="quizDone" class="container d-none">
+        <h1>You are done!</h1>
+        <div class="row">
+            <div class="col-12">
+                <input id="userInt" type="text" class="form-control" placeholder="Your initial" />
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="scoreboard" class="container d-none">
+        <h1>Score Board</h1>
+        <div id="scoreboardChild">
+            <!-- User's scoreboard -->
+        </div>
+        <button onClick="runQuiz()" class="btn btn-primary">Return</button>
+    </div>
+
+    <script>
+
+
+        // push the start button and go to quiz section from startPage section
+        function runQuiz() {
+            //Time countdown
+            countDown();
+            document.querySelector('#startPage').classList.add('d-none');
+            console.log('hiding startPage');
+            document.querySelector('#scoreboard').classList.add('d-none');
+            console.log('hiding scoreboard');
+            document.querySelector('#quizDone').classList.add('d-none');
+            console.log('hiding quizDone');
+            document.querySelector('#quiz').classList.remove('d-none');
+            console.log('showing Quiz');
+            // let's run the questions.
+            runQuizQuestions();
+            console.log('running Quiz Questions');
+
+        }
+
+        let myQuestions = [
+            {
+                question: "Who was Alan Turing?",
+                answer1: "The inventor of Microsoft",
+                answer2: "The author of Harry Potter",
+                answer3: "The hacker of the Enigma",
+                answer4: "The general of the Blitzkrieg",
+                correct: "The hacker of the Enigma"
+            },
+            {
+                question: "What war opponent during the Crusades Period did Saladin respect?",
+                answer1: "Richard Lionheart",
+                answer2: "Pope Urban",
+                answer3: "Reynald of Chatillon",
+                answer4: "Peter the Hermit",
+                correct: "Richard Lionheart"
+            },
+            {
+                question: "In Daniel's vision, what was the goat symbolic of?",
+                answer1: "Greek Empire",
+                answer2: "Medo-Persian Empire",
+                answer3: "Roman Empire",
+                answer4: "Babylonian Empire",
+                correct: "Greek Empire"
+            },
+            {
+                question: "How was the apostle Paul killed?",
+                answer1: "Decapitation",
+                answer2: "Crucifixion",
+                answer3: "Burn at the stake",
+                answer4: "stabbing",
+                correct: "Decapitation"
+            },
+            {
+                question: "On what day did Jesus rise from the dead?",
+                answer1: "Sunday",
+                answer2: "Friday",
+                answer3: "Saturday",
+                answer4: "Monday",
+                correct: "Sunday"
+            },
+            {
+                question: "What hormone is responsible for learning?",
+                answer1: "Oxytocin",
+                answer2: "Endorphine",
+                answer3: "Testosterone",
+                answer4: "Dopamine",
+                correct: "Dopamine"
+            },
+            {
+                question: "Who were the Nephilim described in Genesis 6?",
+                answer1: "Giants",
+                answer2: "Demons",
+                answer3: "Dinosaurs",
+                answer4: "Angels",
+                correct: "Giants"
+            },
+            {
+                question: "What do you say to calm someone who is anxious?",
+                answer1: "Calm down or else.",
+                answer2: "You are being silly.",
+                answer3: "Sleep it off.",
+                answer4: "It looks like you're anxious.",
+                correct: "It looks like you're anxious."
+            },
+            {
+                question: "What is the best thing to do when you meet a bear?",
+                answer1: "Bear spray",
+                answer2: "Play dead",
+                answer3: "Fight it with your fist",
+                answer4: "Push your friend down and run.",
+                correct: "Bear spray"
+            },
+            {
+                question: "What is the Behemoth described in the book of Job?",
+                answer1: "Dinosaur",
+                answer2: "Fruit",
+                answer3: "Hippo",
+                answer4: "Moose",
+                correct: "Dinosaur"
+            }
+        ]
+
+        // create a random mix of questions
+        function shuffle() {
+            let currentIndex = myQuestions.length, temporaryValue, randomIndex;;
+            // while there remains an element to the last one...
+            while (0 !== currentIndex) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                // and swap it with the current element.
+                temporaryValue = myQuestions[currentIndex];
+                myQuestions[currentIndex] = myQuestions[randomIndex];
+                myQuestions[randomIndex] = temporaryValue;
+            }
+            return myQuestions;
+        }
+
+        // shuffling questions
+        let theQuestions = shuffle(myQuestions);
+        console.log('shuffled Questions');
+
+        let i = 0; //counter of questions
+        let timeleft = 60; //time counter
+        function countDown() {
+            //time countdown by setInterval
+            let counting = setInterval(function () {
+                document.querySelector('#time').innerText = timeleft;
+                document.querySelector('#time').style.backgroundColor = "yellow";
+                timeleft -= 1;
+                if (timeleft <= 0) {
+                    clearInterval(counting);
+                    //go to #quizDone
+                    endQuiz();
+                }
+                console.log(timeleft);
+            }, 1000);
+
+
+        }
+
+        // create function runQuizQuestions()
+        function runQuizQuestions() {
+
+            if (i < theQuestions.length) {
+                // fill in the questions HTML
+                document.querySelector('#quizQ').innerText = theQuestions[i].question;
+                // fill in the answer buttons
+                document.querySelector('#a1').innerText = theQuestions[i].answer1;
+                document.querySelector('#a2').innerText = theQuestions[i].answer2;
+                document.querySelector('#a3').innerText = theQuestions[i].answer3;
+                document.querySelector('#a4').innerText = theQuestions[i].answer4;
+                // store correct answer
+                rightAnswer = theQuestions[i].correct;
+            } else {
+                endQuiz();
+            }
+
+
+        }
+        // clicking inside the container to click quiz answers
+        let quizContainer = document.querySelector('#quiz');
+        quizContainer.addEventListener("click", function (event) {
+            event.preventDefault;
+            let answerClick = event.target;
+            console.log(`you clicked on:`, answerClick);
+
+            // if you click a button
+            if (answerClick.matches("button")) {
+                // store button's value
+                let answer = answerClick.innerText;
+                // check answer
+                if (answer === rightAnswer) {
+                    document.querySelector('#result').innerText = "Correct!";
+                    document.querySelector('#result').classList.remove('d-none', 'alert-danger');
+                    setTimeout(function () { document.querySelector('#result').classList.add('d-none', 'alert-danger'); }, 1000);
+                    console.log('right answer');
+                    totalScore += 1;
+                } else {
+                    document.querySelector('#result').innerText = "Wrong!";
+                    document.querySelector('#result').classList.remove('d-none', 'alert-success');
+                    setTimeout(function () { document.querySelector('#result').classList.add('d-none', 'alert-success'); }, 1000);
+                    console.log('wrong answer');
+                    timeleft -= 10;
+                }
+            }
+            // move on to next question.
+            i++;
+            runQuizQuestions();
+        })
+
+        let totalScore = 0;
+
+        // hide the #quiz and show the #quizDone
+        function endQuiz() {
+            document.querySelector('#quiz').classList.add('d-none');
+            console.log('finishing quiz');
+            document.querySelector('#quizDone').classList.remove('d-none');
+            console.log('showing Done box');
+        }
+
+        // when user clicks submit their initials
+        let submitButton = document.querySelector('#submit');
+        // runs on click submitButton
+        submitButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            let userIntInput = document.querySelector('#userInt').value;
+            console.log(`[submit] clicked`);
+
+            // gather all the inputs, and create user object for submission
+            let form = {
+                userInitials: userIntInput,
+                userScore: `${totalScore}/10`
+            }
+            console.log(`form content: `, form);
+            // set new submission to local storage
+            localStorage.form = JSON.stringify(form);
+            console.log(`..form saved as:`, localStorage.form);
+            // start scoreboard page
+            showScore();
+        }
+        )
+
+        //show scoreboard page
+        function showScore() {
+            document.querySelector('#scoreboard').classList.remove('d-none');
+            document.querySelector('#quizDone').classList.add('d-none');
+            //save into scoreboardChild
+            let Storage = JSON.parse(localStorage.form);
+            document.querySelector('#scoreboardChild').innerText = `${Storage.userInitials} has score of ${Storage.userScore}`;
+
+        }
+
+        // add up user's scores in objects
+
+
+    </script>
+</body>
+
+</html>
