@@ -66,7 +66,7 @@
         <div id="scoreboardChild">
             <!-- User's scoreboard -->
         </div>
-        <button onClick="runQuiz()" class="btn btn-primary">Return</button>
+        <button id="restartQuiz" onclick="runQuiz()" class="btn btn-primary">Restart Quiz</button>
     </div>
 
     <script>
@@ -188,11 +188,9 @@
             return myQuestions;
         }
 
-        // shuffling questions
-        let theQuestions = shuffle(myQuestions);
-        console.log('shuffled Questions');
 
-        let i = 0; //counter of questions
+
+
         let timeleft = 60; //time counter
         function countDown() {
             //time countdown by setInterval
@@ -207,13 +205,14 @@
                 }
                 console.log(timeleft);
             }, 1000);
-
-
         }
 
+        let i = 0; //counter of questions
         // create function runQuizQuestions()
         function runQuizQuestions() {
-
+            // shuffling questions
+            let theQuestions = shuffle(myQuestions);
+            console.log('shuffled Questions');
             if (i < theQuestions.length) {
                 // fill in the questions HTML
                 document.querySelector('#quizQ').innerText = theQuestions[i].question;
@@ -225,6 +224,7 @@
                 // store correct answer
                 rightAnswer = theQuestions[i].correct;
             } else {
+                timeleft = 0;
                 endQuiz();
             }
 
@@ -303,7 +303,16 @@
 
         }
 
-        // add up user's scores in objects
+        //restart Quiz
+        let restartButton = document.querySelector('#restartQuiz');
+        // runs on click #restartQuiz
+        restartButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            i = 0; //reset question index
+            timeleft = 60; //reset time
+            runQuiz();
+        }
+        )
 
 
     </script>
